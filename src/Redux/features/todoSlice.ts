@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type TTodo = {
   id: string;
-  title: string;
+  task: string;
   description: string;
   isComplete?: boolean;
 };
@@ -62,9 +62,25 @@ const todoSlice = createSlice({
       const task = state.todos.find((item) => item.id === action.payload);
       task!.isComplete = !task?.isComplete;
     },
+    updateTodo: (state, action) => {
+      const todoList = window.localStorage.getItem("todos");
+      if (todoList) {
+        const todoListArr = JSON.parse(todoList);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        todoListArr.forEach((todo: TTodo, index: number) => {
+          if (todo.id === action.payload.id) {
+            todo.task = action.payload.task;
+            todo.description = action.payload.description;
+          }
+        });
+        window.localStorage.setItem("todos", JSON.stringify(todoListArr));
+        state.todos = [...todoListArr];
+      }
+    },
   },
 });
 
-export const { addtodo, removetodo, toggleCompleted } = todoSlice.actions;
+export const { addtodo, removetodo, toggleCompleted, updateTodo } =
+  todoSlice.actions;
 
 export default todoSlice.reducer;

@@ -4,11 +4,12 @@ import Dropdown from "./Dropdown";
 import { useAppSelector } from "@/Redux/hook";
 
 const TodosContiner = () => {
-  const { todos } = useAppSelector((state) => state.todos);
+  const { todos } = useAppSelector((state) => state.todo);
+  console.log(todos);
   return (
     <div>
       <div className="flex justify-between my-5">
-        <Modal></Modal>
+        <Modal type={"add"}></Modal>
         <Dropdown></Dropdown>
       </div>
       <div className="w-full h-full bg-primary-gradiant p-[5px] rounded-lg">
