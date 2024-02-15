@@ -18,12 +18,12 @@ const Dropdown = () => {
         <Button className="bg-primary-gradiant">filter</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>piority Position</DropdownMenuLabel>
+        <DropdownMenuLabel>Piority Position</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-          <DropdownMenuRadioItem value="High">Top</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="Medum">Bottom</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="Low">Right</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="High">low</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="Medum">Medum</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="Low">High</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>

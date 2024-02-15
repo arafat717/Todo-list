@@ -13,10 +13,20 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+
 type Todo = {
   id: string;
   description: string;
   task: string;
+  piority: string;
 };
 
 type TType = {
@@ -27,13 +37,16 @@ type TType = {
 const Modal = ({ type, todo }: TType) => {
   const [task, setTask] = useState("");
   const [description, setDescription] = useState("");
+  const [piority, setPiority] = useState("high");
   const dispatch = useAppDispatch();
   const idstring = Math.random().toString(36).substring(2, 7);
+  console.log(piority);
 
   useEffect(() => {
     if (type === "update" && todo) {
       setTask(todo.task || "");
       setDescription(todo.description);
+      setPiority(todo.piority);
     }
   }, [type, todo]);
 
@@ -55,15 +68,21 @@ const Modal = ({ type, todo }: TType) => {
       if (task && description) {
         const tododetails = {
           id: idstring,
+          isComplete: false,
           task,
           description,
+          piority,
         };
         dispatch(addtodo(tododetails));
       }
     }
     if (type === "update" && todo) {
-      if (todo.task !== task || todo.description !== description) {
-        dispatch(updateTodo({ ...todo, task, description }));
+      if (
+        todo.task !== task ||
+        todo.description !== description ||
+        todo.piority !== piority
+      ) {
+        dispatch(updateTodo({ ...todo, task, description, piority }));
       } else {
         alert("No changes made");
       }
@@ -125,6 +144,23 @@ const Modal = ({ type, todo }: TType) => {
               id="description"
               className="col-span-3"
             />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="description" className="text-right">
+              Piority
+            </Label>
+            <Select onValueChange={(value) => setPiority(value)}>
+              <SelectTrigger className="col-span-3">
+                <SelectValue placeholder="Piority" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="low">Law</SelectItem>
+                  <SelectItem value="medum">Medum</SelectItem>
+                  <SelectItem value="high">High</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <div className="flex justify-end">
             <DialogClose asChild>

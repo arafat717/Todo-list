@@ -8,9 +8,16 @@ type TTodoProps = {
   task: string;
   description: string;
   isComplete?: boolean;
+  piority: string;
 };
 
-const TodoCard = ({ task, description, id, isComplete }: TTodoProps) => {
+const TodoCard = ({
+  task,
+  description,
+  id,
+  isComplete,
+  piority,
+}: TTodoProps) => {
   const dispatch = useAppDispatch();
 
   const togglestate = () => {
@@ -22,28 +29,40 @@ const TodoCard = ({ task, description, id, isComplete }: TTodoProps) => {
     description,
     id,
     isComplete,
+    piority,
   };
 
   return (
-    <div className="bg-white rounded-lg flex justify-between p-5 border ">
+    <div className="bg-white rounded-lg flex justify-between items-center p-5 border">
       <input
+        className="mr-4"
         onChange={togglestate}
         type="checkbox"
         name="completed"
         id="completed"
       />
-      <p>{task}</p>
-      {/* <p>Time</p> */}
-      <div>
+      <p className="flex-1 px-4">{task}</p>
+      <div className="flex-1 flex items-center gap-2">
+        <div
+          className={`size-3 ${piority === "low" ? "bg-green-500" : ""} 
+          ${piority === "medum" ? "bg-yellow-500" : ""} 
+          ${piority === "high" ? "bg-red-500" : ""} rounded-full`}
+        ></div>
+        <p>{piority}</p>
+      </div>
+      <div className="flex-1">
         {isComplete ? (
           <p className="text-green-500">Done</p>
         ) : (
           <p className="text-red-500">Pending</p>
         )}
       </div>
-      <p>{description}</p>
+      <p className="flex-[2] px-4">{description}</p>
       <div className="flex space-x-5">
-        <Button onClick={() => dispatch(removetodo(id))} className="bg-red-500">
+        <Button
+          onClick={() => dispatch(removetodo(id))}
+          className="bg-red-500 flex-[0.5]"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -59,7 +78,9 @@ const TodoCard = ({ task, description, id, isComplete }: TTodoProps) => {
             />
           </svg>
         </Button>
-        <Modal todo={array} type={"update"}></Modal>
+        <button className="flex-[0.5]">
+          <Modal todo={array} type={"update"}></Modal>
+        </button>
       </div>
     </div>
   );

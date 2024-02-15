@@ -9,7 +9,15 @@ const TodosContiner = () => {
   return (
     <div>
       <div className="flex justify-between my-5">
-        <Modal type={"add"}></Modal>
+        <Modal
+          type={"add"}
+          todo={{
+            id: "",
+            description: "",
+            task: "",
+            piority: "",
+          }}
+        ></Modal>
         <Dropdown></Dropdown>
       </div>
       <div className="w-full h-full bg-primary-gradiant p-[5px] rounded-lg">

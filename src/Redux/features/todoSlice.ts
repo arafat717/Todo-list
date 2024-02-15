@@ -5,6 +5,7 @@ type TTodo = {
   task: string;
   description: string;
   isComplete?: boolean;
+  piority: string;
 };
 
 type TInitialState = {
@@ -35,12 +36,13 @@ const todoSlice = createSlice({
         const todolistArr = JSON.parse(todos);
         todolistArr.push({
           ...action.payload,
+          isComplete: false,
         });
         window.localStorage.setItem("todos", JSON.stringify(todolistArr));
       } else {
         window.localStorage.setItem(
           "todos",
-          JSON.stringify([{ ...action.payload }])
+          JSON.stringify([{ ...action.payload, isComplete: false }])
         );
       }
     },
@@ -71,6 +73,7 @@ const todoSlice = createSlice({
           if (todo.id === action.payload.id) {
             todo.task = action.payload.task;
             todo.description = action.payload.description;
+            todo.piority = action.payload.piority;
           }
         });
         window.localStorage.setItem("todos", JSON.stringify(todoListArr));
